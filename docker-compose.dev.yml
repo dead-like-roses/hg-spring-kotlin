@@ -15,4 +15,6 @@ services:
       - "8080:8080"
     restart: on-failure
     env_file: .env
+    depends_on:
+      - db
 

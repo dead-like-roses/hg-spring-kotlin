@@ -24,7 +24,6 @@ class AuthController(
         //TODO verify
         userService.register(
             registerRequest.name,
-            registerRequest.email,
             registerRequest.login,
             registerRequest.password
         )

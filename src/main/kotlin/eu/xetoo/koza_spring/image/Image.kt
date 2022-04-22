@@ -11,7 +11,7 @@ import javax.persistence.*
 @Table(name = "images")
 class Image(
     @Lob
-    @Column(name="data", columnDefinition="BLOB")
+    @Column(name="data")
     val data: ByteArray,
     val contentType: String,
     @ManyToOne

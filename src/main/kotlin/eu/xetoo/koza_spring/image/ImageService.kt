@@ -17,8 +17,8 @@ class ImageService(
         file: MultipartFile,
         contentType: String,
         user: User
-    ) {
-        Image(
+    ):Image {
+        return Image(
             data = file.bytes,
             contentType = contentType,
             owner = user

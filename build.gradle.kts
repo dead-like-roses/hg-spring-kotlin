@@ -42,6 +42,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+springBoot {
+    mainClass.set("eu.xetoo.koza_spring.KozaSpringApplicationKt")
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }

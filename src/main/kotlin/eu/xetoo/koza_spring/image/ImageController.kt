@@ -2,6 +2,7 @@ package eu.xetoo.koza_spring.image
 
 import eu.xetoo.koza_spring.config.services.UserDetailsImpl
 import eu.xetoo.koza_spring.image.request.ImageUploadRequest
+import eu.xetoo.koza_spring.image.response.ImageCreateResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.annotation.Secured
@@ -28,14 +29,16 @@ class ImageController(
     fun postImage(
         @RequestParam("contentType") contentType: ImageUploadRequest,
         @RequestParam("file") file: MultipartFile
-    ) {
+    ): ImageCreateResponse {
         val user =
             (SecurityContextHolder.getContext().authentication.principal as UserDetailsImpl).user
-        imageService.storeFile(
+        return imageService.storeFile(
             file,
             contentType.contentType,
             user
-        )
+        ).let {
+            ImageCreateResponse(it.id!!)
+        }
     }
 
     @Secured("ROLE_ADMIN")
