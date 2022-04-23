@@ -6,5 +6,5 @@ import java.util.*
 interface UserRepository : CrudRepository<User, UUID> {
 
     fun findByLogin(login: String): Optional<User>
-
+    fun findAllByVerifiedAndDeleted(verified: Boolean, deleted: Boolean = false): List<User>
 }

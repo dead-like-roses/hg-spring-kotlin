@@ -18,14 +18,15 @@ class TokenService(
 
     fun login(login: String, password: String): Token {
         val user = userRepository.findByLogin(login).orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+        if (!user.verified) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
         if (!passwordEncoder.matches(password, user.password)) {
             throw ResponseStatusException(HttpStatus.ALREADY_REPORTED)
         }
-        val token = tokenRepository.save(
+        return tokenRepository.save(
             Token(user, LocalDateTime.now().plusMonths(1))
         )
-        //TODO fucking change it its gonna be a security problem
-        return token
     }
 
     fun verifyToken(id: String): User {

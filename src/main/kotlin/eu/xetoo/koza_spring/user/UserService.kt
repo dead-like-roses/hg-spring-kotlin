@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Service
 class UserService(
@@ -26,5 +27,27 @@ class UserService(
             role = role
         )
         db.save(user)
+    }
+
+    fun getNotVerified(): List<User> {
+        return db.findAllByVerifiedAndDeleted(false)
+    }
+
+    fun acceptUser(id: UUID) {
+        db.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+            .let {
+                it.verified = true
+                db.save(it)
+            }
+    }
+
+    fun deleteUser(id: UUID) {
+        db.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+            .let {
+                it.deleted = true
+                db.save(it)
+            }
     }
 }
