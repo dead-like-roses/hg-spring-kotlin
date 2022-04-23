@@ -1,5 +1,6 @@
 package eu.xetoo.koza_spring.user
 
+import eu.xetoo.koza_spring.role.ERole
 import eu.xetoo.koza_spring.token.TokenService
 import eu.xetoo.koza_spring.user.request.LoginRequest
 import eu.xetoo.koza_spring.user.request.RegisterRequest
@@ -24,7 +25,7 @@ class AuthController(
         //TODO verify
         userService.register(
             registerRequest.name,
-            registerRequest.login,
+            registerRequest.email,
             registerRequest.password
         )
         return ResponseEntity(HttpStatus.OK)
@@ -32,8 +33,8 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequest): LoginResponse {
-        val token = tokenService.login(loginRequest.login, loginRequest.password)
-        return LoginResponse(token.toString())
+        val token = tokenService.login(loginRequest.email, loginRequest.password)
+        return LoginResponse(token.id!!.toString(), token.user.role.name == ERole.ROLE_ADMIN)
     }
 
 }
