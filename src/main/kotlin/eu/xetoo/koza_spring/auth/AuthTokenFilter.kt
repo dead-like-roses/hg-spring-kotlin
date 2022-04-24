@@ -29,9 +29,8 @@ class AuthTokenFilter(
             val token: String? = request.getHeader("Authorization")
             if (token != null && token != "") {
                 val user = tokenService.verifyToken(token)
-                val userDetails = UserDetailsImpl(user)
                 val authentication = UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.authorities
+                    user, null, user.authorities
                 )
                 authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                 SecurityContextHolder.getContext().authentication = authentication

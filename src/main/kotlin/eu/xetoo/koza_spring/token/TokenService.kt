@@ -1,6 +1,7 @@
 package eu.xetoo.koza_spring.token
 
 import eu.xetoo.koza_spring.config.PasswordEncoder
+import eu.xetoo.koza_spring.config.services.UserDetailsImpl
 import eu.xetoo.koza_spring.user.User
 import eu.xetoo.koza_spring.user.UserRepository
 import org.springframework.http.HttpStatus
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
 import java.util.UUID
+import javax.transaction.Transactional
 
 @Service
 class TokenService(
@@ -29,11 +31,12 @@ class TokenService(
         )
     }
 
-    fun verifyToken(id: String): User {
+    @Transactional
+    fun verifyToken(id: String): UserDetailsImpl {
         //TODO check if uuid is valid
         val tokenID = UUID.fromString(id)
         val token = tokenRepository.findById(tokenID).orElseThrow { ResponseStatusException(HttpStatus.UNAUTHORIZED) }
-        return token.user
+        return UserDetailsImpl(token.user)
     }
 
     fun logout(token: UUID) {
