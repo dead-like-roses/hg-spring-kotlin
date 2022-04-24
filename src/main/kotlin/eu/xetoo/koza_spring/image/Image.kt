@@ -2,6 +2,7 @@ package eu.xetoo.koza_spring.image
 
 import eu.xetoo.koza_spring.user.User
 import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.Type
 import java.sql.Blob
 import java.time.LocalDateTime
 import java.util.*
@@ -10,7 +11,6 @@ import javax.persistence.*
 @Entity
 @Table(name = "images")
 class Image(
-    @Lob
     @Column(name="data")
     val data: ByteArray,
     val contentType: String,

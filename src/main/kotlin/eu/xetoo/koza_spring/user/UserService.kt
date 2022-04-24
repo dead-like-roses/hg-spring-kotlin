@@ -24,7 +24,7 @@ class UserService(
             login = login,
             password = passwordEncoder.encode(password),
             changedPassword = LocalDateTime.now(),
-            role = role
+            role = listOf(role)
         )
         db.save(user)
     }

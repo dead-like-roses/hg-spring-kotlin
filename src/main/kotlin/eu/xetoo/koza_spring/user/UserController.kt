@@ -4,10 +4,7 @@ import eu.xetoo.koza_spring.token.TokenService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.annotation.Secured
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -15,6 +12,7 @@ import javax.servlet.http.HttpServletRequest
 @RequestMapping("/user")
 @RestController
 @Secured("ROLE_USER")
+@CrossOrigin(originPatterns = ["*"])
 class UserController(
     private val tokenService: TokenService
 ) {

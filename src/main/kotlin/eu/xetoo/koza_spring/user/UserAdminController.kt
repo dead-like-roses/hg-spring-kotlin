@@ -9,6 +9,7 @@ import java.util.UUID
 @RequestMapping("/user")
 @RestController
 @Secured("ROLE_ADMIN")
+@CrossOrigin(originPatterns = ["*"])
 class UserAdminController(
     private val userService: UserService
 ) {

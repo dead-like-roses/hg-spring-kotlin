@@ -10,6 +10,7 @@ import java.util.*
 @RequestMapping("/product")
 @RestController
 @Secured("ROLE_ADMIN")
+@CrossOrigin(originPatterns = ["*"])
 class ProductAdminController(
     private val productService: ProductService
 ) {

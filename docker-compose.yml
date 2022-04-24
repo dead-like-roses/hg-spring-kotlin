@@ -1,0 +1,31 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+    env_file: .env
+    networks:
+      - internal-network
+  backend:
+    build: ./goat/
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    env_file: .env
+    depends_on:
+      - db
+      - proxy
+    networks:
+      - internal-network
+  proxy:
+    build: ./nginx/
+    ports:
+      - "80:80"
+    networks:
+      - internal-network
+networks:
+  internal-network:

@@ -11,7 +11,7 @@ class UserDetailsImpl(
     val user: User
 ) : UserDetails {
 
-    private var grantedAuthorities: MutableCollection<out GrantedAuthority> = setOf(user.role).map { r -> SimpleGrantedAuthority(r.name.name) }.toMutableList()
+    private var grantedAuthorities: MutableCollection<out GrantedAuthority> = user.role.map { r -> SimpleGrantedAuthority(r.name.name) }.toMutableList()
 
     override fun isAccountNonExpired(): Boolean {
         return true

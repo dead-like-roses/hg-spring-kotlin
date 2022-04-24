@@ -14,8 +14,8 @@ class User(
     val login: String,
     val password: String,
     val changedPassword: LocalDateTime,
-    @ManyToOne
-    val role: Role,
+    @ManyToMany
+    val role: List<Role>,
     var verified: Boolean = false,
     val created: LocalDateTime = LocalDateTime.now(),
     var deleted: Boolean = false,
