@@ -16,7 +16,7 @@ class UserService(
     private val passwordEncoder: PasswordEncoder
 ) {
 
-    fun register(username: String, login: String, password: String) {
+    fun register(username: String, login: String, password: String): User{
         val role = roleRepository.findByName(ERole.ROLE_USER)
             .orElseThrow { ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR) }
         val user = User(
@@ -26,7 +26,7 @@ class UserService(
             changedPassword = LocalDateTime.now(),
             role = listOf(role)
         )
-        db.save(user)
+        return db.save(user)
     }
 
     fun getNotVerified(): List<User> {

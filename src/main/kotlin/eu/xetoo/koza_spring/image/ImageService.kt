@@ -17,7 +17,7 @@ class ImageService(
         file: MultipartFile,
         contentType: String,
         user: User
-    ):Image {
+    ): Image {
         return Image(
             data = file.bytes,
             contentType = contentType,
@@ -28,7 +28,11 @@ class ImageService(
     fun deleteFile(
         id: UUID
     ) {
-        db.deleteById(id)
+        if (db.existsById(id)) {
+            db.deleteById(id)
+        } else {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+        }
     }
 
     fun getFile(
